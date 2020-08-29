@@ -10,7 +10,8 @@ gulp.task('clean-lib', async function() {
 
 gulp.task('copy-files', function() {
   return gulp
-    .src(['package.json', 'README.md', 'LICENSE'])
+    .src(['package.json', 'README.md'])
+    // .src(['package.json', 'README.md', 'LICENSE'])
     .pipe(gulp.dest('lib/'))
 })
 
