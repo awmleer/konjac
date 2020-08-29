@@ -1,0 +1,3 @@
+# Konjac
+
+Internationalization made easy.
