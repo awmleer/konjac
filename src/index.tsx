@@ -1,4 +1,4 @@
-import React, {FC, ReactElement, useContext, useMemo} from 'react'
+import React, {FC, ReactNode, useContext, useMemo} from 'react'
 
 interface Config {
   locale: string
@@ -27,7 +27,7 @@ export const KonjacProvider: FC<Props> = (props) => {
   )
 }
 
-type Message = ReactElement | (() => ReactElement)
+type Message = ReactNode | (() => ReactNode)
 
 export function useTranslation() {
   const config = useContext(KonjacContext)
