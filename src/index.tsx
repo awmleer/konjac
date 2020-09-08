@@ -3,7 +3,7 @@ import React, {FC, ReactNode, useContext, useMemo} from 'react'
 interface Config {
   locale: string
   allLocales: string[]
-  currentIndex: number
+  fallbackOrder?: Record<string, string>
 }
 
 const KonjacContext = React.createContext<Config>(null)
@@ -11,14 +11,15 @@ const KonjacContext = React.createContext<Config>(null)
 interface Props {
   locale: string
   allLocales: string[]
+  fallbackOrder?: Record<string, string>
 }
 
 export const KonjacProvider: FC<Props> = (props) => {
-  const {locale, allLocales} = props
-  const config = useMemo(() => ({
+  const {locale, allLocales, fallbackOrder} = props
+  const config = useMemo<Config>(() => ({
     locale,
     allLocales,
-    currentIndex: allLocales.indexOf(locale),
+    fallbackOrder,
   }), [locale, allLocales])
   return (
     <KonjacContext.Provider value={config}>
@@ -40,12 +41,27 @@ export function useTranslation() {
         return null
       }
     }
-    const message = messages[config.currentIndex]
-    if (typeof message === 'function') {
-      return message()
-    } else {
-      return message
+    function getMessage(locale: string): ReactNode {
+      let message: Message
+      if (Array.isArray(messages)) {
+        const index = config.allLocales.indexOf(locale)
+        message = messages[index]
+      } else {
+        message = messages[locale]
+      }
+      if (message === null || message === undefined) {
+        const fallbackLocale = config.fallbackOrder?.[locale]
+        if (fallbackLocale) {
+          return getMessage(fallbackLocale)
+        }
+      }
+      if (typeof message === 'function') {
+        return message()
+      } else {
+        return message
+      }
     }
+    return getMessage(config.locale)
   }
   return {
     t,

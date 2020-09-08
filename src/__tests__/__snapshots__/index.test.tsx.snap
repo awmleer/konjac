@@ -13,3 +13,11 @@ exports[`empty messages 1`] = `
   <div />
 </DocumentFragment>
 `;
+
+exports[`fallback 1`] = `
+<DocumentFragment>
+  <div>
+    hello
+  </div>
+</DocumentFragment>
+`;

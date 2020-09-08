@@ -21,6 +21,7 @@ test('can do translation', function () {
   expect(renderer.asFragment()).toMatchSnapshot()
 })
 
+
 test('empty messages', function () {
   const App: FC = (props) => {
     const {t} = useTranslation()
@@ -39,4 +40,21 @@ test('empty messages', function () {
   expect(renderer.asFragment()).toMatchSnapshot()
 })
 
+
+test('fallback', function () {
+  const App: FC = (props) => {
+    const {t} = useTranslation()
+    return (
+      <div>
+        {t(['hello'])}
+      </div>
+    )
+  }
+  const renderer = testing.render(
+    <KonjacProvider locale={'zh'} allLocales={['en', 'zh']} fallbackOrder={{'zh': 'en'}}>
+      <App/>
+    </KonjacProvider>
+  )
+  expect(renderer.asFragment()).toMatchSnapshot()
+})
 
