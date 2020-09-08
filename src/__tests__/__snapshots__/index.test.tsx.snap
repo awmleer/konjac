@@ -7,3 +7,9 @@ exports[`can do translation 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`empty messages 1`] = `
+<DocumentFragment>
+  <div />
+</DocumentFragment>
+`;

@@ -20,3 +20,23 @@ test('can do translation', function () {
   )
   expect(renderer.asFragment()).toMatchSnapshot()
 })
+
+test('empty messages', function () {
+  const App: FC = (props) => {
+    const {t} = useTranslation()
+    let messages: string[]
+    return (
+      <div>
+        {t(messages)}
+      </div>
+    )
+  }
+  const renderer = testing.render(
+    <KonjacProvider locale={'zh'} allLocales={['en', 'zh']}>
+      <App/>
+    </KonjacProvider>
+  )
+  expect(renderer.asFragment()).toMatchSnapshot()
+})
+
+

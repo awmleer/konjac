@@ -32,6 +32,14 @@ type Message = ReactNode | (() => ReactNode)
 export function useTranslation() {
   const config = useContext(KonjacContext)
   function t(messages: Message[]) {
+    if (!messages) {
+      try {
+        throw new Error('Empty messages detected.')
+      } catch (e) {
+        console.error(e)
+        return null
+      }
+    }
     const message = messages[config.currentIndex]
     if (typeof message === 'function') {
       return message()
