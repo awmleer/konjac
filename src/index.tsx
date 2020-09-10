@@ -32,7 +32,9 @@ type Message = ReactNode | (() => ReactNode)
 
 export function useTranslation() {
   const config = useContext(KonjacContext)
-  function t(messages: Message[]) {
+  function t(messages: string[]): string
+  function t(messages: Message[]): ReactNode
+  function t(messages: Message[]): ReactNode {
     if (!messages) {
       try {
         throw new Error('Empty messages detected.')
